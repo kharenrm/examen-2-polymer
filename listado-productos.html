@@ -1,0 +1,63 @@
+<link rel="import" href="./bower_components/polymer/polymer.html">
+<link rel="import" href="./producto-item.html">
+<dom-module id="listado-productos">
+    <template>
+        <style is="custom-style" include="listado-productos-shared-style">
+        .producto-item-container {
+            background-color: #dddddd;
+        }
+
+        .img-catalogo {
+            width: 100px;
+            height: 100px;
+            @apply(--img-catalogo)
+        }
+
+        .producto-container {
+            margin: 8px;
+            @apply(--producto-container)
+        }
+
+        .acciones-container {
+            text-align: right;
+            margin: 8px;
+            @apply(--acciones-container)
+        }
+
+        .btn {
+            @apply --btn;
+        }
+        </style>
+        <div class="listado-productos-container">
+            <div class="acciones-container">
+                <button class="btn" on-tap="_newProducto">Nuevo Producto</button>
+            </div>
+            <template is="dom-repeat" items={{productos}} as="producto">
+                <div class="producto-container">
+                    <producto-item producto={{producto}}></producto-item>
+                    <button class="btn" on-tap="_modificarProducto">Modificar</button>
+                </div>
+            </template>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'listado-productos',
+        properties: {
+            productos: {
+                type: Array,
+                value: function() {
+                    return [];
+                }
+            }
+        },
+        _newProducto: function() {
+            this.fire('new-producto', {});
+        },
+        _modificarProducto: function(e) {
+            console.log(e.model.producto);
+            this.fire('modificar-producto', { producto: e.model.producto });
+        }
+    });
+    </script>
+    <dom-module>

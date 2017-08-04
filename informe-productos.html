@@ -1,0 +1,54 @@
+<link rel="import" href="./bower_components/polymer/polymer.html">
+<dom-module id="informe-productos">
+    <template>
+        <style is="custom-style" include="informe-productos-shared-style">
+        .informe-productos-container {
+            background-color: #eeeeee;
+        }
+        .titulo{
+
+        }
+        .informe_container{
+            margin: 8px;
+        }
+        .informe_container label{
+            width: 60px;
+            margin: 8px;
+        }
+        .informe_container span{
+            font-weight: bold;
+        }
+        </style>
+        <div class="informe-productos-container">
+            <h1 class="titulo">Informe de stock</h1>
+            <template is="dom-repeat" items={{productos}} as="producto">
+            <div class="informe_container">
+            	<template is="dom-if" if=[[_hayStock(producto.stock)]]>
+                    <label><span>Nombre:</span> [[producto.nombre]]</label>
+                    <label><span>Productos vendidos:</span> [[producto.ventas]]</label>
+                    <label><span>Total ventas:</span> [[_totalVentas(producto.precio, producto.ventas)]]</label>
+                </template>
+            </div>         
+            </template>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'informe-productos',
+        properties: {
+            productos: {
+                type: [],
+                value: function() {
+                    return [];
+                }
+            },
+        },
+        _hayStock: function(stockProducto) {
+            return stockProducto <= 0;
+        },
+        _totalVentas: function(precio, piezas) {
+            return precio * piezas;
+        }
+    });
+    </script>
+    <dom-module>

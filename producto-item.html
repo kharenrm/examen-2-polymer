@@ -1,0 +1,56 @@
+<link rel="import" href="./bower_components/polymer/polymer.html">
+<dom-module id="producto-item">
+    <template>
+        <style is="custom-style" include="producto-item-shared-style">
+        .producto-item-container {
+            background-color: #dddddd;
+            border-style: ridge;
+            @apply(--producto-item-container)
+        }
+        .producto-item-container label{
+            color: #6495ed;
+            margin: 8px;
+            @apply(--producto-item-container)
+        }
+
+        .img-catalogo {
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+            margin: 8px;
+            box-shadow: 5px 5px 5px grey;
+            @apply(--img-catalogo)
+        }
+
+        .nombre_producto {
+            font-size: 25px;
+            color: grey;
+            @apply(--nombre_producto)
+        }
+
+        </style>
+        <div class="producto-item-container">
+            <div>
+                <img class="img-catalogo" src$="[[producto.imagenUrl]]">
+                <legend class="nombre_producto">[[producto.nombre]]</legend>
+            </div>
+            <div>
+                <label>Precio: [[producto.precio]]</label>
+                <label>Tallas: [[producto.tallas]]</label>
+                <label>Ventas: [[producto.ventas]]</label>
+                <label>Stock: [[producto.stock]]</label>
+            </div>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'producto-item',
+        properties: {
+            producto: {
+                type: Object,
+                value: {}
+            }
+        }
+    });
+    </script>
+    <dom-module>

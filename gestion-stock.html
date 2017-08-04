@@ -1,0 +1,77 @@
+<link rel="import" href="./bower_components/polymer/polymer.html">
+<link rel="import" href="./listado-productos.html">
+<link rel="import" href="./producto-formulario.html">
+<link rel="import" href="./informe-productos.html">
+<dom-module id="gestion-stock">
+    <template>
+        <style is="custom-style" include="gestion-stock-shared-style">
+        	:root{
+        		--btn:{
+        			color: white;
+        			width: 200px;
+        			height: 30px;
+        			background-color: #5f9ea0;
+        		}
+        	}
+        </style>
+        <listado-productos productos=[[productos]]></listado-productos>
+        <producto-formulario producto={{producto}}></producto-formulario>
+        <informe-productos productos=[[productos]]></informe-productos>
+    </template>
+    <script>
+    Polymer({
+        is: 'gestion-stock',
+        properties: {
+            productos:{
+            	type: Array,
+            	value: function(){
+            		return [
+            		{id: 'ves7', nombre: 'vestido', precio: 50, tallas: 'S,M,L', ventas: 6, stock: 0, imagenUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1tHAFGu5K0bQ2yaQV6FuVu7PJklcds4TWgk3IkXsi6jWTNZcCsA'},
+            		{id: 'jea5', nombre: 'jeans', precio: 150, tallas: 'XS,S,M,L', ventas: 4, stock: 0, imagenUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1tHAFGu5K0bQ2yaQV6FuVu7PJklcds4TWgk3IkXsi6jWTNZcCsA'},
+            		{id: 'blu5', nombre: 'blusa', precio: 80, tallas: 'M,L', ventas: 8, stock: 11, imagenUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1tHAFGu5K0bQ2yaQV6FuVu7PJklcds4TWgk3IkXsi6jWTNZcCsA'}
+            		]
+            	}
+            },
+            producto:{
+            	type: Object,
+            	value: null
+            }
+        },
+        listeners:{
+        	'new-producto': '_nuevoProducto',
+        	'guardar-producto': '_saveProducto',
+        	'modificar-producto': '_updateProducto'
+        },
+        _nuevoProducto: function(e){
+        	this.set('producto', e.detail);
+        },
+        _saveProducto: function(e){
+        	var productoRecibido = e.detail.producto;
+        	if(this._existeProducto(productoRecibido.id)){
+        		var index = this.productos.indexOf(productoRecibido);
+        		this.set('productos.' + index, Object.assign({}, productoRecibido));
+        	} else{
+        		this.push('productos', productoRecibido);
+        	}
+        },
+        _updateProducto: function(e){
+        	var productoRecibido = e.detail.producto;
+        	this.productos.forEach((producto)=>{
+        		if(producto.nombre == productoRecibido.nombre){
+        			this.set('producto', producto);
+        		}
+        	});
+        },
+        _existeProducto: function(productoId){
+        	var existe = false;
+        	for(var index in this.productos){
+        		if(this.productos[index].id == productoId){
+        			existe = true;
+        			break;
+        		}
+        	}
+        	return existe;
+        }
+    });
+    </script>
+    <dom-module>
