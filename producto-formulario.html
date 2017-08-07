@@ -57,9 +57,9 @@
         _saveProducto: function(e) {
             e.stopPropagation();
             e.preventDefault();
-            this.producto.id = this._generaId();
+            this.set('producto.id', this._generaId());
             this.fire('guardar-producto', { producto: this.producto });
-            this.producto = null;
+            this.set('producto', null);
         },
         _generaId: function() {
             return this.producto.nombre.substring(0, 3) + this.producto.nombre.length;

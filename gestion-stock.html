@@ -46,10 +46,10 @@
         	this.set('producto', e.detail);
         },
         _saveProducto: function(e){
-        	var productoRecibido = e.detail.producto;
+            var productoRecibido = JSON.parse(JSON.stringify(e.detail.producto));
         	if(this._existeProducto(productoRecibido.id)){
         		var index = this.productos.indexOf(productoRecibido);
-        		this.set('productos.' + index, Object.assign({}, productoRecibido));
+                this.splice('productos', index, 1, productoRecibido);
         	} else{
         		this.push('productos', productoRecibido);
         	}

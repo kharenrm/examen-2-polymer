@@ -48,14 +48,14 @@
                 type: Array,
                 value: function() {
                     return [];
-                }
+                },
+                notify: true
             }
         },
         _newProducto: function() {
             this.fire('new-producto', {});
         },
         _modificarProducto: function(e) {
-            console.log(e.model.producto);
             this.fire('modificar-producto', { producto: e.model.producto });
         }
     });
